@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<WAD_CW2_00003905.Models.ServiceViewModel>
+@using PagedList.Mvc;
+@using WAD_CW2_00003905.Models
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Index", "Service", FormMethod.Get))
+{
+    @Html.TextBox("name", "", new { @class = "form-control" })
+    @*@Html.DropDownList("type", new SelectList(ViewBag.ListItems, "Value", "Text"), new { @class = "form-control" })*@
+    @Html.DropDownList("sortDetails",
+    EnumHelper.GetSelectList(typeof(SortDetail)),
+    new { @class = "form-control" })
+    @Html.DropDownList("sortOrder",
+    EnumHelper.GetSelectList(typeof(SortOrder)),
+    new { @class = "form-control" })
+
+    <input type="submit" value="Filter" />
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.Order, name = ViewBag.Name, sortDetails = ViewBag.Criteria, type = ViewBag.Category }))
+Showing @Model.FirstItemOnPage to @Model.LastItemOnPage out of @Model.TotalItemCount Products

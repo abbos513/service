@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WAD_CW2_00003905.Models.LoggingViewModel>
+
+@{
+    ViewBag.Title = "Logging";
+}
+
+<h2>Logging</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.controller)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.action)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.httpRequestType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.httpParameters)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.controller)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.action)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.httpRequestType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.httpParameters)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

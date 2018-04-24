@@ -1,0 +1,162 @@
+﻿@model WAD_CW2_00003905.Models.RegistrationViewModel
+
+@{
+    ViewBag.Title = "Registration";
+}
+
+<h2>Registration</h2>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>RegistrationViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control", @Id="firstname", onkeyup = "checkName();" } })
+                @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+                <div id="firstnamemes"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @Id = "lastname", onkeyup= "checkName();" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                <div id="lastnamemes"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", onkeyup = "executeQuery();" }})
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <div id="emailMessage"> </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", onkeyup = "checkUsernameExsists();", @id="username" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                <div id="usernameMessage"></div>
+            </div>            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @Id="password1", onkeyup = "checkPasswordIfMatch();" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, "Validate Password", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @Id = "password2", onkeyup= "checkPasswordIfMatch();" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                <div id="passwordMeggase"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="g-recaptcha col-md-offset-2" data-sitekey="6LcT00IUAAAAABweMgc7dvp2AMd3nDNj3YKf-qlM">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-default" id="regBtn"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+    <script>
+        function executeQuery() {
+            jQuery.ajax({
+                method: "GET",
+                url: '/api/EmailApi/EmailExsists',
+                data: {
+                    'email': jQuery('#Email').val()
+                },
+                success: function (res) {
+                    if (res == true) {
+                        jQuery('#emailMessage').css({ "color": "red" });
+                        jQuery('#emailMessage').text("This email address already registered");
+                        $('#regBtn').prop("disabled", true);
+                        console.log("keldi");
+                    } else {
+                        jQuery('#emailMessage').css({ "color": "green" });
+                        jQuery('#emailMessage').text("Email address is Free");
+                        $('#regBtn').prop("disabled", false);
+                    }
+                }
+            });
+        }
+
+        function checkUsernameExsists() {
+            jQuery.ajax({
+                method: "GET",
+                url: '/api/EmailApi/UsernameExsists',
+                data: {
+                    'username': jQuery('#username').val()
+                },
+                success: function (res) {
+                    if (res == true) {
+                        jQuery('#usernameMessage').css({ "color": "red" });
+                        jQuery('#usernameMessage').text("Username already exsist");
+                        $('#regBtn').prop("disabled", true);
+                        console.log("username keldi");
+                    } else {
+                        jQuery('#usernameMessage').css({ "color": "green" });
+                        jQuery('#usernameMessage').text("Username is Free");
+                        $('#regBtn').prop("disabled", false);
+                    }
+                }
+            });
+        }
+
+        function checkPasswordIfMatch() {
+            var pass1 = $("#password1").val();
+            var pass2 = $("#password2").val();
+            if(pass1 == pass2){
+                $('#regBtn').prop("disabled", false);
+                $('#passwordMeggase').text("Passwords match");
+            } else if (pass1 != pass2) {
+                $('#regBtn').prop("disabled", true);
+                $('#passwordMeggase').text("Passwords do not match");
+            }
+        }
+
+        //function checkName() {
+        //    var tokens = "/^+\.$/i";
+        //    var firstname = $("#firstname").val();
+
+        //    if (firstname.search(tokens)) {
+        //        $('#firstnamemes').text("Name can not contain symbols");
+        //        $('#regBtn').prop("disabled", true);
+        //    }else {
+        //        $('#regBtn').prop("disabled", false);
+        //    }
+        //}
+
+
+    </script>

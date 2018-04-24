@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WAD_CW2_00003905", "WAD_CW2_00003905\WAD_CW2_00003905.csproj", "{2B56D1FA-F180-4276-A699-B3D7434D35E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WAD_CW2_00003905.DAL", "WAD_CW2_00003905.DAL\WAD_CW2_00003905.DAL.csproj", "{0BA9381D-6625-4A75-8DA1-39CB6ADB6D00}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B56D1FA-F180-4276-A699-B3D7434D35E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B56D1FA-F180-4276-A699-B3D7434D35E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B56D1FA-F180-4276-A699-B3D7434D35E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B56D1FA-F180-4276-A699-B3D7434D35E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA9381D-6625-4A75-8DA1-39CB6ADB6D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA9381D-6625-4A75-8DA1-39CB6ADB6D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA9381D-6625-4A75-8DA1-39CB6ADB6D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA9381D-6625-4A75-8DA1-39CB6ADB6D00}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
